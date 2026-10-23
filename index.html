@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10131d">
+<title>UmPasso — começa pequeno</title>
+<style>
+:root{--bg:#10131d;--panel:#191e2c;--panel2:#202739;--text:#f6f7fb;--muted:#a9b2c7;--lime:#c7f36b;--lav:#b8a5ff;--line:#30394e;--danger:#ffb7b7}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -10%,#302c54 0,transparent 38%),var(--bg);color:var(--text);font:16px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:760px;margin:auto;padding:20px 16px 90px}.top{display:flex;justify-content:space-between;align-items:center;margin:8px 0 30px}.brand{display:flex;gap:10px;align-items:center;font-weight:800;font-size:20px;letter-spacing:-.5px}.logo{width:36px;height:36px;border-radius:12px;background:var(--lime);color:#141923;display:grid;place-items:center;font-size:20px;font-weight:900}.pill{border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--muted);font-size:12px}
+h1{font-size:clamp(32px,7vw,52px);line-height:1.04;letter-spacing:-1.8px;margin:0 0 12px;max-width:580px}h1 span{color:var(--lime)}.sub{color:var(--muted);max-width:520px;margin:0 0 24px}
+.card{background:linear-gradient(145deg,#1b2232,#171c29);border:1px solid var(--line);border-radius:24px;padding:20px;margin:14px 0;box-shadow:0 18px 40px #0002}
+.eyebrow{text-transform:uppercase;letter-spacing:1.5px;font-size:11px;color:var(--lime);font-weight:800;margin-bottom:9px}
+label{display:block;font-weight:700;margin:14px 0 8px;font-size:14px}textarea,input,select{width:100%;background:#101521;border:1px solid #3b455d;color:var(--text);border-radius:13px;padding:13px;font:inherit;outline:none}textarea{resize:vertical;min-height:78px}textarea:focus,input:focus,select:focus{border-color:var(--lime)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:1px solid #414b62;color:var(--muted);background:#141a27;border-radius:999px;padding:9px 13px;cursor:pointer;font:inherit;font-size:13px}.chip.active{background:var(--lime);border-color:var(--lime);color:#161b22;font-weight:800}
+button{border:0;border-radius:14px;background:var(--lime);color:#171c24;padding:14px 18px;font:inherit;font-weight:850;cursor:pointer;width:100%;margin-top:16px}button.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}button:active{transform:scale(.99)}
+.result{display:none}.result.show{display:block}.action{font-size:25px;line-height:1.2;letter-spacing:-.5px;margin:6px 0 12px}.reason{color:var(--muted);font-size:14px}.step{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line);align-items:flex-start}.num{flex:0 0 28px;height:28px;border-radius:9px;background:#2b3447;color:var(--lime);display:grid;place-items:center;font-weight:800}.step p{margin:2px 0 0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#111723;border-radius:15px;padding:14px}.stat strong{display:block;font-size:24px}.stat small{color:var(--muted);font-size:11px}.history{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}.history:last-child{border:0}.empty{color:var(--muted);font-size:14px}
+.premium{background:linear-gradient(135deg,#2b2851,#1a2434);border-color:#5a5089}.premium h2{margin:4px 0 8px;font-size:23px}.premium p{color:#c8c6df;font-size:14px}.tag{display:inline-block;background:#c7f36b;color:#161b22;font-weight:850;border-radius:7px;padding:4px 7px;font-size:11px}
+footer{color:#778198;font-size:11px;text-align:center;margin-top:26px} .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#f6f7fb;color:#141923;padding:10px 16px;border-radius:999px;display:none;font-size:13px;font-weight:700;z-index:9}
+@media(min-width:650px){.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;align-items:start}.grid .card{margin-top:0}.card{padding:24px}}
+</style>
+</head>
+<body>
+<main>
+  <div class="top"><div class="brand"><div class="logo">↗</div> UmPasso</div><div class="pill">MVP · modo demonstração</div></div>
+  <h1>Não precisas de resolver tudo. <span>Só o próximo passo.</span></h1>
+  <p class="sub">Diz-nos o que te está a bloquear, quanto tempo tens e quanta energia sentes. Recebe uma ação pequena e concreta para começares agora.</p>
+
+  <div class="grid">
+  <section class="card">
+    <div class="eyebrow">01 / Onde estás agora?</div>
+    <label for="block">O que estás a adiar ou a tentar resolver?</label>
+    <textarea id="block" placeholder="Ex.: tenho a casa desarrumada e não sei por onde começar"></textarea>
+    <label>Quanto tempo tens?</label>
+    <div class="chips" id="timeChips"><button class="chip active" data-v="2">2 min</button><button class="chip" data-v="5">5 min</button><button class="chip" data-v="10">10 min</button><button class="chip" data-v="20">20 min</button></div>
+    <label>Como está a tua energia?</label>
+    <div class="chips" id="energyChips"><button class="chip" data-v="low">Baixa</button><button class="chip active" data-v="mid">Normal</button><button class="chip" data-v="high">Alta</button></div>
+    <label for="mood">O que precisas mais neste momento?</label>
+    <select id="mood"><option value="start">Começar uma tarefa</option><option value="calm">Acalmar a cabeça</option><option value="organize">Organizar-me</option><option value="move">Mexer o corpo</option><option value="connect">Ligar-me a alguém</option></select>
+    <button id="make">Encontrar o meu próximo passo ↗</button>
+  </section>
+
+  <section>
+    <div class="card result" id="result" aria-live="polite">
+      <div class="eyebrow">O teu próximo passo</div>
+      <div class="action" id="actionTitle">Escolhe uma ação pequena.</div>
+      <p class="reason" id="actionReason"></p>
+      <div id="steps"></div>
+      <button id="done">✓ Feito — guardar vitória</button>
+      <button class="secondary" id="another">Dá-me outra opção</button>
+    </div>
+    <div class="card">
+      <div class="eyebrow">02 / O teu progresso</div>
+      <div class="stats">
+        <div class="stat"><strong id="count">0</strong><small>passos concluídos</small></div>
+        <div class="stat"><strong id="streak">0</strong><small>dias ativos</small></div>
+        <div class="stat"><strong id="minutes">0</strong><small>minutos investidos</small></div>
+      </div>
+      <div style="margin-top:18px;font-weight:800">Pequenas vitórias</div>
+      <div id="history" style="margin-top:7px"><p class="empty">As tuas primeiras vitórias aparecem aqui.</p></div>
+      <button class="secondary" id="clear">Limpar dados deste dispositivo</button>
+    </div>
+    <div class="card premium">
+      <span class="tag">IDEIA PREMIUM</span>
+      <h2>O teu ritmo, os teus planos.</h2>
+      <p>Uma futura versão paga pode incluir rotinas personalizadas, planos semanais, histórico completo e lembretes inteligentes.</p>
+      <p><strong>Plano Plus — €3,99/mês</strong><br>Preço a testar com utilizadores; pagamento ainda não ativado neste MVP.</p>
+      <button id="interest">Tenho interesse no Plus</button>
+    </div>
+  </section>
+  </div>
+  <footer>Os teus dados ficam guardados neste dispositivo. Este protótipo não cria conta nem cobra pagamentos. Não é aconselhamento médico ou psicológico.</footer>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+const $=id=>document.getElementById(id);
+let minutes=2, energy='mid', current=null, alternatives=[];
+function chips(container,cb){$(container).querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{ $(container).querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');cb(b.dataset.v)}))}
+chips('timeChips',v=>minutes=Number(v));chips('energyChips',v=>energy=v);
+function read(){try{return JSON.parse(localStorage.getItem('umpasso_history')||'[]')}catch(e){return []}}
+function save(h){localStorage.setItem('umpasso_history',JSON.stringify(h))}
+function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',2400)}
+function pick(){
+ const mood=$('mood').value, task=$('block').value.trim();
+ let pool=[];
+ if(mood==='calm') pool=[
+  ['Faz três expirações lentas.','Solta os ombros e inspira sem forçar. Expira um pouco mais devagar do que inspiras. Repete três vezes.'],
+  ['Despeja os pensamentos no papel.','Escreve tudo o que te está a ocupar a cabeça durante o tempo disponível. Não organizes nem julgues.'],
+  ['Faz uma pausa sem ecrã.','Pousa o telemóvel, olha pela janela e identifica cinco coisas que consegues ver.']];
+ else if(mood==='organize') pool=[
+  ['Escolhe uma única superfície.','Define uma área pequena — uma mesa ou uma prateleira. Retira apenas o que não pertence ali.'],
+  ['Escreve as três prioridades.','Anota tudo o que tens em mente e escolhe só três coisas importantes para hoje.'],
+  ['Prepara o primeiro passo de amanhã.','Deixa aberto o documento certo, separa o material ou escreve a primeira ação.']];
+ else if(mood==='move') pool=[
+  ['Levanta-te e mexe-te durante dois minutos.','Roda os ombros, estica suavemente os braços e caminha um pouco, respeitando os teus limites.'],
+  ['Vai buscar um copo de água.','Levanta-te, bebe água se te apetecer e regressa com atenção ao que precisas.'],
+  ['Dá uma volta curta.','Se for seguro e possível, caminha um pouco e repara no que te rodeia.']];
+ else if(mood==='connect') pool=[
+  ['Envia uma mensagem simples.','Escolhe alguém e envia: “Olá! Lembrei-me de ti. Como estás?” Sem obrigação de uma conversa longa.'],
+  ['Marca um momento para falar.','Escolhe uma pessoa com quem gostavas de falar e propõe um momento concreto.'],
+  ['Diz obrigado a alguém.','Envia uma nota sincera a alguém que tenha feito algo que apreciaste.']];
+ else pool=[
+  ['Abre a tarefa — sem a terminar.','Abre o documento, a página ou o material de que precisas. O objetivo é apenas começar.'],
+  ['Transforma a tarefa numa ação de 2 minutos.','Escreve a menor ação física que podes fazer já. Começa por essa, não pelo projeto inteiro.'],
+  ['Define o resultado mínimo.','Completa a frase: “Daqui a pouco, será suficiente se eu tiver…”. Escolhe um resultado pequeno.']];
+ if(energy==='low') pool=pool.filter(x=>!x[0].includes('caminha')&&!x[0].includes('Levanta-te'));
+ if(!pool.length)pool=[['Faz uma pausa e escolhe uma coisa.','Respira, reduz a tarefa e escolhe uma ação que pareça possível agora.']];
+ // Personalize the explanation without claiming the app understands the task.
+ pool=pool.map(x=>[x[0], task ? x[1]+' Mantém em mente: "'+task.slice(0,110)+(task.length>110?'…':'')+'".' : x[1]]);
+ return pool;
+}
+function renderChoice(item){
+ current=item;$('actionTitle').textContent=item[0];$('actionReason').textContent=`Uma ação ajustada a ${minutes} minuto(s), com energia ${energy==='low'?'baixa':energy==='mid'?'normal':'alta'}. Não precisas de acabar tudo.`;
+ $('steps').innerHTML='';['Começa agora, sem preparar mais nada.','Quando o tempo acabar, decide se queres continuar ou parar.'].forEach((s,i)=>{let d=document.createElement('div');d.className='step';d.innerHTML='<div class="num">'+(i+1)+'</div><p></p>';d.querySelector('p').textContent=s;$('steps').appendChild(d)});
+ $('result').classList.add('show');
+}
+$('make').onclick=()=>{alternatives=pick();renderChoice(alternatives[Math.floor(Math.random()*alternatives.length)]);$('result').scrollIntoView({behavior:'smooth',block:'nearest'})};
+$('another').onclick=()=>{let next=alternatives.filter(x=>x[0]!==current?.[0]);if(!next.length)next=pick();renderChoice(next[Math.floor(Math.random()*next.length)])};
+function dateKey(d){return d.toISOString().slice(0,10)}
+function renderStats(){
+ const h=read();$('count').textContent=h.length;$('minutes').textContent=h.reduce((a,x)=>a+(x.minutes||0),0);
+ const days=[...new Set(h.map(x=>x.date))].sort().reverse();let streak=0;
+ if(days.length){let d=new Date();let today=dateKey(d);if(days[0]!==today)d.setDate(d.getDate()-1);
+ while(days.includes(dateKey(d))){streak++;d.setDate(d.getDate()-1)}}
+ $('streak').textContent=streak;
+ $('history').innerHTML='';
+ if(!h.length){$('history').innerHTML='<p class="empty">As tuas primeiras vitórias aparecem aqui.</p>';return}
+ h.slice(-5).reverse().forEach(x=>{let row=document.createElement('div');row.className='history';let left=document.createElement('span');left.textContent=x.title;let right=document.createElement('span');right.style.color='var(--lime)';right.textContent='+'+x.minutes+' min';row.append(left,right);$('history').appendChild(row)});
+}
+$('done').onclick=()=>{if(!current){toast('Escolhe primeiro um passo.');return}let h=read();h.push({title:current[0],minutes,date:dateKey(new Date())});save(h);renderStats();$('result').classList.remove('show');current=null;toast('Vitória guardada neste dispositivo ✨')};
+$('clear').onclick=()=>{if(confirm('Apagar o histórico guardado neste dispositivo?')){save([]);renderStats();toast('Dados apagados.')}};
+$('interest').onclick=()=>{let interests=Number(localStorage.getItem('umpasso_interest')||0)+1;localStorage.setItem('umpasso_interest',String(interests));toast('Obrigado! Interesse registado apenas neste dispositivo.');};
+renderStats();
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body>
+</html>

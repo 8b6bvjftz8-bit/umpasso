@@ -1,0 +1,9 @@
+{
+  "name": "UmPasso — começa pequeno",
+  "short_name": "UmPasso",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#10131d",
+  "theme_color": "#10131d",
+  "description": "Transforma bloqueios em pequenas ações possíveis."
+}
