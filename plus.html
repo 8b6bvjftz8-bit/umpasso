@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10131d">
+<title>UmPasso Plus</title>
+<style>
+:root{color-scheme:dark;--bg:#10131d;--panel:#191e2c;--green:#c5f36b;--text:#f5f7fa;--muted:#a5adbb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:24px 16px}
+main{max-width:600px;margin:auto}
+a{color:var(--green)}
+h1{font-size:36px;margin-bottom:8px}
+p{line-height:1.5;color:var(--muted)}
+.card{background:var(--panel);border:1px solid #30384a;border-radius:18px;padding:20px;margin:16px 0}
+.price{font-size:30px;font-weight:800;margin:10px 0}
+small{color:var(--muted)}
+button{width:100%;padding:15px;border:0;border-radius:12px;background:var(--green);color:#10131d;font-size:16px;font-weight:800}
+.feature{margin:10px 0}
+.tag{color:var(--green);font-weight:700}
+</style>
+</head>
+<body>
+<main>
+<a href="./">← Voltar ao UmPasso</a>
+<p class="tag">UM PASSO DE CADA VEZ</p>
+<h1>UmPasso Plus</h1>
+<p>Mais clareza, mais organização e pequenos passos para os teus objetivos.</p>
+
+<div class="card">
+<h2>Semanal</h2>
+<div class="price">1,49 € <small>/ semana</small></div>
+<p>Para experimentar as funcionalidades Plus.</p>
+<button onclick="interest('Semanal')">Tenho interesse</button>
+</div>
+
+<div class="card">
+<h2>Mensal</h2>
+<div class="price">3,99 € <small>/ mês</small></div>
+<p>Flexibilidade com renovação mensal.</p>
+<button onclick="interest('Mensal')">Tenho interesse</button>
+</div>
+
+<div class="card">
+<h2>6 meses</h2>
+<div class="price">19,99 € <small>/ 6 meses</small></div>
+<p>Acesso por seis meses, pago antecipadamente.</p>
+<button onclick="interest('6 meses')">Tenho interesse</button>
+</div>
+
+<div class="card">
+<p class="tag">MELHOR PREÇO POR MÊS</p>
+<h2>Anual</h2>
+<div class="price">34,99 € <small>/ ano</small></div>
+<p>Acesso por um ano, pago antecipadamente.</p>
+<button onclick="interest('Anual')">Tenho interesse</button>
+</div>
+
+<div class="card">
+<h2>O que inclui o Plus?</h2>
+<div class="feature">✓ Histórico completo das tuas ações</div>
+<div class="feature">✓ Planos personalizados por objetivo</div>
+<div class="feature">✓ Mais sugestões diárias</div>
+</div>
+
+<p id="notice" role="status">Os planos apresentados são uma proposta. Os pagamentos ainda não estão ativos.</p>
+<p><small>Antes de pagar, o utilizador deverá poder consultar as condições, a renovação e como cancelar. Não introduzas dados de pagamento nesta página.</small></p>
+</main>
+<script>
+function interest(plan){
+document.getElementById('notice').textContent='Registaste interesse no plano '+plan+'. Ainda não existe cobrança nem assinatura ativa.';
+try{
+let list=JSON.parse(localStorage.getItem('umpasso_plus_interest')||'[]');
+list.push({plan:plan,date:new Date().toISOString()});
+localStorage.setItem('umpasso_plus_interest',JSON.stringify(list));
+}catch(e){}
+}
+</script>
+</body>
+</html>
